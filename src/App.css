@@ -2,6 +2,7 @@
   width: 240px;
   margin: 10px;
   padding: 10px;
+  height: 24px;
 }
 
 .button {
@@ -20,11 +21,21 @@
 }
 
 .online {
+  margin: 10px;
+  padding: 5px 10px;
+  width: 240px;
   color: #0b0;
   font-weight: bold;
+  text-align: center;
+  border: solid 1px lightgray;
 }
 
 .offline {
+  margin: 10px;
+  padding: 5px 10px;
+  width: 240px;
   color: red;
   font-weight: bold;
+  text-align: center;
+  border: solid 1px lightgray;
 }
