@@ -18,3 +18,13 @@
   flex-direction: row;
   justify-content: center;
 }
+
+.online {
+  color: #0b0;
+  font-weight: bold;
+}
+
+.offline {
+  color: red;
+  font-weight: bold;
+}

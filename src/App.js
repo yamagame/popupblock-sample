@@ -8,6 +8,36 @@ const endMessage = "処理終了";
 function App() {
   const [message, setMessage] = React.useState("");
   const [targetUrl, setTargetUrl] = React.useState("");
+  const [onlineMessage, setOnlineMessage] = React.useState("");
+  const [onlineClass, setOnlineClass] = React.useState("");
+
+  React.useEffect(() => {
+    if (window.navigator.onLine) {
+      setOnlineMessage("オンライン");
+    } else {
+      setOnlineMessage("オフライン");
+    }
+    const onOnline = (e) => {
+      setOnlineMessage("オンライン");
+    };
+    const onOffline = (e) => {
+      setOnlineMessage("オフライン");
+    };
+    window.addEventListener("offline", onOffline);
+    window.addEventListener("online", onOnline);
+    return () => {
+      window.removeEventListener("offline", onOffline);
+      window.removeEventListener("online", onOnline);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (onlineMessage === "オンライン") {
+      setOnlineClass("online");
+    } else {
+      setOnlineClass("offline");
+    }
+  }, [onlineMessage]);
 
   const onClickOpenPopup = () => {
     window.open(targetUrl);
@@ -78,12 +108,15 @@ function App() {
   return (
     <div>
       <div className="row">
+        <div className={onlineClass}>{onlineMessage}</div>
+      </div>
+      <div className="row">
         <input
           className="input"
           type="text"
           onChange={onChange}
           value={targetUrl}
-          placeholder="プップアップページのURLを入力"
+          placeholder="ポップアップページのURLを入力"
         />
       </div>
       <div className="row">
