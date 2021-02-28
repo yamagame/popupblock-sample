@@ -39,3 +39,25 @@
   text-align: center;
   border: solid 1px lightgray;
 }
+
+.show {
+  display: block;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.disabled {
+  color: lightgray;
+  border: solid 1px lightgray;
+  pointer-events: none;
+}
+
+.message {
+  width: 240px;
+  margin: 5px;
+  padding: 10px;
+  height: 24px;
+  text-align: center;
+}

@@ -10,6 +10,8 @@ function App() {
   const [targetUrl, setTargetUrl] = React.useState("");
   const [onlineMessage, setOnlineMessage] = React.useState("");
   const [onlineClass, setOnlineClass] = React.useState("");
+  const [showButtons, setShowButtons] = React.useState("show");
+  const [disableButtons, setDisableButtons] = React.useState(false);
 
   React.useEffect(() => {
     if (window.navigator.onLine) {
@@ -39,8 +41,22 @@ function App() {
     }
   }, [onlineMessage]);
 
+  React.useEffect(() => {
+    if (message === startMessage) {
+      setDisableButtons(true);
+    } else {
+      setDisableButtons(false);
+    }
+  }, [message]);
+
+  const buttonCss = React.useMemo(
+    () => `button ${disableButtons ? "disabled" : ""}`,
+    [disableButtons]
+  );
+
   const onClickOpenPopup = () => {
     window.open(targetUrl);
+    setShowButtons("show");
   };
 
   const onClickOpenClosePopup = () => {
@@ -52,6 +68,19 @@ function App() {
       win1.close();
       setMessage(endMessage);
     }
+  };
+
+  const onClick1SecondPopup = () => {
+    setMessage(startMessage);
+    setTimeout(() => {
+      const win1 = window.open(targetUrl);
+      if (!win1) {
+        setMessage(`${blockMessage}(1)`);
+      } else {
+        win1.close();
+        setMessage(endMessage);
+      }
+    }, 1500);
   };
 
   const onClick5SecondPopup = () => {
@@ -103,6 +132,14 @@ function App() {
     }
   };
 
+  const onClick5SecondOpenPopup = () => {
+    setMessage(startMessage);
+    setShowButtons("hidden");
+    setTimeout(() => {
+      setMessage("ポップアップを開いてください。");
+    }, 5500);
+  };
+
   const onChange = (e) => setTargetUrl(e.target.value);
 
   return (
@@ -120,32 +157,44 @@ function App() {
         />
       </div>
       <div className="row">
-        <div className="button" onClick={onClickOpenPopup}>
+        <div className={buttonCss} onClick={onClickOpenPopup}>
           ポップアップを開く
         </div>
       </div>
-      <div className="row">
-        <div className="button" onClick={onClickOpenClosePopup}>
-          ポップアップを開いて閉じる
+      <div className={showButtons}>
+        <div className="row">
+          <div className={buttonCss} onClick={onClickOpenClosePopup}>
+            ポップアップを開いて閉じる
+          </div>
+        </div>
+        <div className="row">
+          <div className={buttonCss} onClick={onClick1SecondPopup}>
+            1.5秒待ち開いて閉じる
+          </div>
+        </div>
+        <div className="row">
+          <div className={buttonCss} onClick={onClick5SecondPopup}>
+            5.5秒待ち開いて閉じる
+          </div>
+        </div>
+        <div className="row">
+          <div className={buttonCss} onClick={onClickDoublePopup}>
+            2回開いて閉じる
+          </div>
+        </div>
+        <div className="row">
+          <div className={buttonCss} onClick={onClickDoubleWaitPopup}>
+            開いて閉じる(2回目だけ1秒待ち)
+          </div>
         </div>
       </div>
       <div className="row">
-        <div className="button" onClick={onClick5SecondPopup}>
-          5.5秒待ち開いて閉じる
+        <div className={buttonCss} onClick={onClick5SecondOpenPopup}>
+          5.5秒待ち問い合わせで開く
         </div>
       </div>
       <div className="row">
-        <div className="button" onClick={onClickDoublePopup}>
-          2回開いて閉じる
-        </div>
-      </div>
-      <div className="row">
-        <div className="button" onClick={onClickDoubleWaitPopup}>
-          開いて閉じる(2回目だけ1秒待ち)
-        </div>
-      </div>
-      <div className="row">
-        <div>{message}</div>
+        <div className="message">{message}</div>
       </div>
     </div>
   );
