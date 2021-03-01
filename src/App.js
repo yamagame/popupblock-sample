@@ -132,6 +132,27 @@ function App() {
     }
   };
 
+  const onClickDoubleWait5secPopup = () => {
+    setMessage(startMessage);
+    setTimeout(() => {
+      const win1 = window.open(targetUrl);
+      win1?.close();
+      if (!win1) {
+        setMessage(`${blockMessage}(1)`);
+      } else {
+        setTimeout(() => {
+          const win2 = window.open(targetUrl);
+          win2?.close();
+          if (!win2) {
+            setMessage(`${blockMessage}(2)`);
+          } else {
+            setMessage(endMessage);
+          }
+        }, 5500);
+      }
+    }, 5500);
+  };
+
   const onClick5SecondOpenPopup = () => {
     setMessage(startMessage);
     setShowButtons("hidden");
@@ -180,6 +201,11 @@ function App() {
         <div className="row">
           <div className={buttonCss} onClick={onClickDoublePopup}>
             2回開いて閉じる
+          </div>
+        </div>
+        <div className="row">
+          <div className={buttonCss} onClick={onClickDoubleWait5secPopup}>
+            2回開いて閉じる(5秒待ち)
           </div>
         </div>
         <div className="row">
