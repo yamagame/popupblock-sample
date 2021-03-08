@@ -201,6 +201,7 @@ function App() {
             type="number"
             className="number"
             defaultValue="0"
+            pattern="[0-9]"
             onKeyDown={(e) => {
               if (e.key.length === 1 && !e.key.match(/^[0-9]$/)) {
                 e.preventDefault();
@@ -218,7 +219,12 @@ function App() {
       <div className="row">
         <div className="col border">
           <p className="label">半角数字入力 対策なし</p>
-          <input type="number" className="number" defaultValue="0" />
+          <input
+            type="number"
+            pattern="[0-9]"
+            className="number"
+            defaultValue="0"
+          />
         </div>
       </div>
       <div className="row">
