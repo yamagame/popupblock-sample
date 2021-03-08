@@ -5,6 +5,14 @@ const startMessage = "処理開始";
 const blockMessage = "ポップアップがブロックされました。";
 const endMessage = "処理終了";
 
+const wait = (time = 5500) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
+
 function App() {
   const [message, setMessage] = React.useState("");
   const [targetUrl, setTargetUrl] = React.useState("");
@@ -161,12 +169,57 @@ function App() {
     }, 5500);
   };
 
+  const onOpenWindow = () => {
+    console.log("click");
+    const test = async () => {
+      const value = "hello";
+      await wait();
+      return () => {
+        return value;
+      };
+    };
+    test().then(async (cb) => {
+      await wait();
+      console.log(cb());
+    });
+  };
+
   const onChange = (e) => setTargetUrl(e.target.value);
 
   return (
     <div>
       <div className="row">
-        <div className={onlineClass}>{onlineMessage}</div>
+        <div className="col border">
+          <p className="label">オンライン・オフライン判定</p>
+          <div className={onlineClass}>{onlineMessage}</div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col border">
+          <p className="label">半角数字入力 対策あり</p>
+          <input
+            type="number"
+            className="number"
+            defaultValue="0"
+            onKeyDown={(e) => {
+              if (e.key.length === 1 && !e.key.match(/^[0-9]$/)) {
+                e.preventDefault();
+              }
+            }}
+            onBeforeInput={(e) => {
+              console.log(e);
+              if (e.data.length === 1 && !e.data.match(/^[0-9]$/)) {
+                e.preventDefault();
+              }
+            }}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col border">
+          <p className="label">半角数字入力 対策なし</p>
+          <input type="number" className="number" defaultValue="0" />
+        </div>
       </div>
       <div className="row">
         <input
@@ -217,6 +270,11 @@ function App() {
       <div className="row">
         <div className={buttonCss} onClick={onClick5SecondOpenPopup}>
           5.5秒待ち問い合わせで開く
+        </div>
+      </div>
+      <div className="row">
+        <div className={buttonCss} onClick={onOpenWindow}>
+          ウインドウを開く
         </div>
       </div>
       <div className="row">
