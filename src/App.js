@@ -203,12 +203,23 @@ function App() {
             defaultValue="0"
             pattern="[0-9]"
             onKeyDown={(e) => {
-              if (e.key.length === 1 && !e.key.match(/^[0-9]$/)) {
+              if (
+                !e.ctrlKey &&
+                !e.metaKey &&
+                e.key.length === 1 &&
+                !e.key.match(/^[0-9]$/)
+              ) {
                 e.preventDefault();
               }
             }}
+            onInput={(e) => {
+              var str = e.target.value;
+              while (str.match(/[^0-9]/)) {
+                str = str.replace(/[^0-9]/, "");
+              }
+              e.target.value = str;
+            }}
             onBeforeInput={(e) => {
-              console.log(e);
               if (e.data.length === 1 && !e.data.match(/^[0-9]$/)) {
                 e.preventDefault();
               }
