@@ -202,6 +202,9 @@ function App() {
             className="number"
             defaultValue="0"
             pattern="[0-9]"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
             onKeyDown={(e) => {
               if (
                 !e.ctrlKey &&
@@ -211,13 +214,6 @@ function App() {
               ) {
                 e.preventDefault();
               }
-            }}
-            onInput={(e) => {
-              var str = e.target.value;
-              while (str.match(/[^0-9]/)) {
-                str = str.replace(/[^0-9]/, "");
-              }
-              e.target.value = str;
             }}
             onBeforeInput={(e) => {
               if (e.data.length === 1 && !e.data.match(/^[0-9]$/)) {
