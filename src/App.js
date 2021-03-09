@@ -185,6 +185,21 @@ function App() {
   };
 
   const onChange = (e) => setTargetUrl(e.target.value);
+  const onKeyDown = (e) => {
+    if (
+      !e.ctrlKey &&
+      !e.metaKey &&
+      e.key.length === 1 &&
+      !e.key.match(/^[0-9]$/)
+    ) {
+      e.preventDefault();
+    }
+  };
+  const onBeforeInput = (e) => {
+    if (e.data.length === 1 && !e.data.match(/^[0-9]$/)) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div>
@@ -196,41 +211,49 @@ function App() {
       </div>
       <div className="row">
         <div className="col border">
-          <p className="label">半角数字入力 対策あり</p>
+          <p className="label">半角数字入力 対策あり number</p>
           <input
             type="number"
+            inputMode="numeric"
             className="number"
             defaultValue="0"
             pattern="[0-9]"
             onChange={(e) => {
               console.log(e.target.value);
             }}
-            onKeyDown={(e) => {
-              if (
-                !e.ctrlKey &&
-                !e.metaKey &&
-                e.key.length === 1 &&
-                !e.key.match(/^[0-9]$/)
-              ) {
-                e.preventDefault();
-              }
-            }}
-            onBeforeInput={(e) => {
-              if (e.data.length === 1 && !e.data.match(/^[0-9]$/)) {
-                e.preventDefault();
-              }
-            }}
+            onKeyDown={onKeyDown}
+            onBeforeInput={onBeforeInput}
           />
         </div>
       </div>
       <div className="row">
         <div className="col border">
-          <p className="label">半角数字入力 対策なし</p>
+          <p className="label">半角数字入力 対策あり text</p>
+          <input
+            type="text"
+            inputMode="numeric"
+            className="number"
+            defaultValue="0"
+            pattern="[0-9]"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+            onKeyDown={onKeyDown}
+            onBeforeInput={onBeforeInput}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col border">
+          <p className="label">半角数字入力 対策なし number</p>
           <input
             type="number"
             pattern="[0-9]"
             className="number"
             defaultValue="0"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
           />
         </div>
       </div>
