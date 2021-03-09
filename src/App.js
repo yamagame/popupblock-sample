@@ -228,9 +228,9 @@ function App() {
       </div>
       <div className="row">
         <div className="col border">
-          <p className="label">半角数字入力 対策あり text</p>
+          <p className="label">半角数字入力 対策あり tel</p>
           <input
-            type="text"
+            type="tel"
             inputMode="numeric"
             className="number"
             defaultValue="0"
