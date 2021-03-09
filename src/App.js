@@ -248,6 +248,7 @@ function App() {
           <p className="label">半角数字入力 対策なし number</p>
           <input
             type="number"
+            inputMode="numeric"
             pattern="[0-9]"
             className="number"
             defaultValue="0"
