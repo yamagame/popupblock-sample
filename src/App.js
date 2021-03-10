@@ -20,6 +20,15 @@ function App() {
   const [onlineClass, setOnlineClass] = React.useState("");
   const [showButtons, setShowButtons] = React.useState("show");
   const [disableButtons, setDisableButtons] = React.useState(false);
+  const numberInput = React.useRef(null);
+
+  React.useEffect(() => {
+    // const input = document.getElementsByName("numberInput")[0];
+    // numberInput.current.focus();
+    // numberInput.current.value = "0";
+    // numberInput.current.dispatchEvent(new FocusEvent("focus"));
+    // input.dispatchEvent(new Event("change", { bubbles: true }));
+  }, [numberInput]);
 
   React.useEffect(() => {
     if (window.navigator.onLine) {
@@ -207,12 +216,16 @@ function App() {
         <div className="col border">
           <p className="label">オンライン・オフライン判定</p>
           <div className={onlineClass}>{onlineMessage}</div>
+          <a className="label" href="http://www.yahoo.co.jp">
+            Yahoo!
+          </a>
         </div>
       </div>
       <div className="row">
         <div className="col border">
           <p className="label">半角数字入力 対策あり number</p>
           <input
+            ref={numberInput}
             type="number"
             inputMode="numeric"
             className="number"
